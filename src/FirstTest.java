@@ -5,12 +5,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.net.URL;
+import java.util.List;
 
 public class FirstTest {
     private AppiumDriver driver;
@@ -140,7 +141,60 @@ public class FirstTest {
         String article_title = titleElement.getText();
 
         Assert.assertEquals("We see unexpected title!","Java (programming language)",article_title);
+    }
 
+    @Test
+    public void testPlaceholderTextIsValid() {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find 'onboarding_skip_button'",
+                5
+        );
+
+        WebElement placeholderElement = waitForElementPresent(
+                By.xpath("//android.widget.TextView[@text='Search Wikipedia']"),
+                "Cannot find placeholder",
+                5
+        );
+
+        Assert.assertTrue(assertElementHasText(placeholderElement, "Search Wikipedia",
+                "placeholder text in search is not equal to 'Search Wikipedia'"));
+    }
+
+    @Test
+    public void CancelSearch() throws InterruptedException {
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find 'onboarding_skip_button'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        Thread.sleep(15000);
+        List<WebElement> searchResult = driver.findElements(By.className("android.view.ViewGroup"));
+
+        Assert.assertTrue("search results less than 2", searchResult.size() > 2);
+
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find and clean search field",
+                5
+        );
+
+        waitForElementPresent(By.id("org.wikipedia:id/search_empty_message"), "Blank search page not displayed", 5);
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutSeconds) {
@@ -179,5 +233,14 @@ public class FirstTest {
         WebElement element = waitForElementPresent(by,error_message,timeoutInSeconds);
         element.clear();
         return element;
+    }
+
+    private boolean  assertElementHasText(WebElement element, String expectedText, String error_message) {
+        if (element.getText().equals(expectedText)) {
+            return true;
+        } else {
+            System.out.println(error_message);
+            return false;
+        }
     }
 }
