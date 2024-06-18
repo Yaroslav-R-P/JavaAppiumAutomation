@@ -10,8 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.net.URL;
+import java.util.List;
 
 public class FirstTest {
     private AppiumDriver driver;
@@ -159,6 +159,42 @@ public class FirstTest {
 
         Assert.assertTrue(assertElementHasText(placeholderElement, "Search Wikipedia",
                 "placeholder text in search is not equal to 'Search Wikipedia'"));
+    }
+
+    @Test
+    public void CancelSearch() throws InterruptedException {
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find 'onboarding_skip_button'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        Thread.sleep(15000);
+        List<WebElement> searchResult = driver.findElements(By.className("android.view.ViewGroup"));
+
+        Assert.assertTrue("search results less than 2", searchResult.size() > 2);
+
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find and clean search field",
+                5
+        );
+
+        waitForElementPresent(By.id("org.wikipedia:id/search_empty_message"), "Blank search page not displayed", 5);
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutSeconds) {
