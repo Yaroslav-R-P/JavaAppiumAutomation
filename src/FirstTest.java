@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FirstTest {
     private AppiumDriver driver;
@@ -162,7 +163,7 @@ public class FirstTest {
     }
 
     @Test
-    public void CancelSearch() throws InterruptedException {
+    public void testCancelSearchResult() throws InterruptedException {
 
         waitForElementAndClick(
                 By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
@@ -195,6 +196,39 @@ public class FirstTest {
         );
 
         waitForElementPresent(By.id("org.wikipedia:id/search_empty_message"), "Blank search page not displayed", 5);
+    }
+
+    @Test
+    public void CheckingWordsInSearch() throws InterruptedException {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find 'onboarding_skip_button'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        Thread.sleep(30000);
+        List<WebElement> searchResult = driver.findElements(By.id("org.wikipedia:id/page_list_item_title"));
+
+        int allSearchResults = searchResult.size();
+        List<WebElement> list  = searchResult.stream()
+                .filter(element -> element.getText().toLowerCase().contains("java"))
+                .collect(Collectors.toList());
+        int searchResultsContainsJava = list.size();
+
+        Assert.assertEquals(allSearchResults,searchResultsContainsJava);
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutSeconds) {
