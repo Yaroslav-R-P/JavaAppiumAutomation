@@ -1,16 +1,21 @@
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.URL;
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -231,6 +236,23 @@ public class FirstTest {
         Assert.assertEquals(allSearchResults,searchResultsContainsJava);
     }
 
+    @Test
+    public void testSwipeArticle() throws InterruptedException {
+        Thread.sleep(5000);
+
+        swipeUp(2000);
+        swipeUp(2000);
+        swipeUp(2000);
+        swipeUp(2000);
+        swipeUp(2000);
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find 'onboarding_skip_button'",
+                5
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutSeconds) {
         WebDriverWait wait = new WebDriverWait(driver,timeoutSeconds);
         wait.withMessage(error_message + "\n");
@@ -276,5 +298,20 @@ public class FirstTest {
             System.out.println(error_message);
             return false;
         }
+    }
+
+    protected void swipeUp(int timeOfSwipe) {
+        TouchAction action = new TouchAction(driver);
+        Dimension size = driver.manage().window().getSize();
+        int x = size.width / 2;
+        int start_y = (int)(size.height * 0.8);
+        int end_y = (int)(size.height * 0.2);
+
+        action
+                .press(PointOption.point(x,start_y))
+                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(timeOfSwipe)))
+                .moveTo(PointOption.point(x, end_y))
+               // .release()
+                .perform();
     }
 }
