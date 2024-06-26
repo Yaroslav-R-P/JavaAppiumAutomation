@@ -22,6 +22,11 @@ import org.openqa.selenium.interactions.Sequence;
 
 public class FirstTest {
     private AppiumDriver driver;
+    private static final String TITLE_LOCATOR_ON_ONBOARDING = "org.wikipedia:id/primaryTextView";
+    private static final String FIRST_SCREEN_TITLE = "The Free Encyclopedia\n" + "…in over 300 languages";
+    private static final String SECOND_SCREEN_TITLE = "New ways to explore";
+    private static final String THIRD_SCREEN_TITLE = "Reading lists with sync";
+    private static final String FOURTH_SCREEN_TITLE = "Data & Privacy";
 
     @Before
     public void setUp() throws Exception {
@@ -459,6 +464,49 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testCheckTheTitlesOfTheOnboarding() {
+        waitForElementPresent(By.id("org.wikipedia:id/scrollViewContainer"),
+                "Cannot find onboarding",
+                5);
+
+        swipeLeftIfElementIsValid(
+                By.id(TITLE_LOCATOR_ON_ONBOARDING),
+                FIRST_SCREEN_TITLE,
+                "Cannot find expected title"
+        );
+
+        swipeLeftIfElementIsValid(
+                By.id(TITLE_LOCATOR_ON_ONBOARDING),
+                SECOND_SCREEN_TITLE,
+                "Cannot find expected title"
+        );
+
+        swipeLeftIfElementIsValid(
+                By.id(TITLE_LOCATOR_ON_ONBOARDING),
+                THIRD_SCREEN_TITLE,
+                "Cannot find expected title"
+        );
+
+        swipeLeftIfElementIsValid(
+                By.id(TITLE_LOCATOR_ON_ONBOARDING),
+                FOURTH_SCREEN_TITLE,
+                "Cannot find expected title"
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_done_button"),
+                "Cannot find element 'onboarding_done_button'",
+                5
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/main_toolbar_wordmark"),
+                "Home page is not displayed",
+                10
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
         wait.withMessage(error_message + "\n");
@@ -554,6 +602,17 @@ public class FirstTest {
             }
             swipeLeftQuick();
             already_swiped++;
+        }
+    }
+
+    protected void swipeLeftIfElementIsValid(By by, String expectedResult, String error_message) {
+        WebElement element = waitForElementPresent(by, "Cannot find expected title", 5);
+        String actualTitleText = element.getText();
+
+        if (expectedResult.equals(actualTitleText)) {
+            swipeLeftQuick();
+        } else {
+            Assert.assertTrue("The screen title is incorrect, swipe is cancelled",expectedResult.equals(actualTitleText));
         }
     }
 
