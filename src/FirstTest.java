@@ -358,7 +358,7 @@ public class FirstTest {
                 "Cannot find by the request" + search_line,
                 20
         );
-        int amount_of_search_results = getAmountOfElemenst(By.className(search_result_locator));
+        int amount_of_search_results = getAmountOfElements(By.className(search_result_locator));
         Assert.assertTrue(
                 "We found too few results!",
                 amount_of_search_results > 0
@@ -507,6 +507,42 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testTitlePresence() throws InterruptedException {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find 'onboarding_skip_button'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.TextView[@text='Java (programming language)']"),
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                20
+        );
+        Thread.sleep(5000);
+
+        assertElementPresent(
+                By.xpath("//android.widget.TextView[@text='Java (programming language)']"),
+                "Cannot find title"
+        );
+
+
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
         wait.withMessage(error_message + "\n");
@@ -636,7 +672,7 @@ public class FirstTest {
         swipeLeft(200);
     }
 
-    private int getAmountOfElemenst(By by) {
+    private int getAmountOfElements(By by) {
         List elements = driver.findElements(by);
         return elements.size();
     }
@@ -644,5 +680,13 @@ public class FirstTest {
     private String waitForElementAndGetAttribute(By by, String error_message, long timeOutInSeconds) {
         WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
         return element.getText();
+    }
+    private void assertElementPresent(By by, String error_message)
+    {
+        int sum_of_elements = getAmountOfElements(by);
+        if (sum_of_elements == 0) {
+            String error = "Expected element :" + by.toString() + " not found. ";
+            throw new AssertionError(error +" " + error_message);
+        }
     }
 }
