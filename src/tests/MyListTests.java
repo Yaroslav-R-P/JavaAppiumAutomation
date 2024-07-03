@@ -1,11 +1,9 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.ui.ArticlePageObject;
-import lib.ui.MyListsPageObject;
-import lib.ui.OnboardingPageObject;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 public class MyListTests extends CoreTestCase {
     //тесты списков статей
@@ -17,10 +15,11 @@ public class MyListTests extends CoreTestCase {
         SearchPageObject searchPageObject = new SearchPageObject(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
-        searchPageObject.clickByArticleWithSubstring("Java (programming language)");
+        String articleWithSubstring = "Java (programming language)";
+        searchPageObject.clickByArticleWithSubstring(articleWithSubstring);
 
         ArticlePageObject articlePageObject = new ArticlePageObject(driver);
-        articlePageObject.waitForTitleElement();
+        articlePageObject.waitForTitleElement(articleWithSubstring);
         String article_title = articlePageObject.getArticleTitle();
         String name_of_folder = "Learning programming";
         articlePageObject.addArticleToMyListAndGoToIt(name_of_folder);

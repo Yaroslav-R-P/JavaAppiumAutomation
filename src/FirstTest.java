@@ -73,35 +73,5 @@ public class FirstTest extends CoreTestCase  {
 
 
 
-    @Test
-    public void testTitlePresence() throws InterruptedException {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
-        onboardingPageObject.skipOnboarding();
 
-        MainPageObject mainPageObject = new MainPageObject(driver);
-        mainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"),
-                "Cannot find 'Search Wikipedia' input",
-                5
-        );
-
-        mainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Java",
-                "Cannot find search input",
-                5
-        );
-
-        mainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.TextView[@text='Java (programming language)']"),
-                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
-                20
-        );
-        Thread.sleep(5000);
-
-        mainPageObject.assertElementPresent(
-                By.xpath("//android.widget.TextView[@text='Java (programming language)']"),
-                "Cannot find title"
-        );
-    }
 }
