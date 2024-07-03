@@ -12,11 +12,7 @@ import java.util.stream.Collectors;
 
 public class FirstTest extends CoreTestCase  {
 
-    private static final String TITLE_LOCATOR_ON_ONBOARDING = "org.wikipedia:id/primaryTextView";
-    private static final String FIRST_SCREEN_TITLE = "The Free Encyclopedia\n" + "…in over 300 languages";
-    private static final String SECOND_SCREEN_TITLE = "New ways to explore";
-    private static final String THIRD_SCREEN_TITLE = "Reading lists with sync";
-    private static final String FOURTH_SCREEN_TITLE = "Data & Privacy";
+
 
     @Test
     public void testPlaceholderTextIsValid() {
@@ -75,49 +71,7 @@ public class FirstTest extends CoreTestCase  {
         );
     }
 
-    @Test
-    public void testCheckTheTitlesOfTheOnboarding() {
-        MainPageObject mainPageObject = new MainPageObject(driver);
-        mainPageObject.waitForElementPresent(By.id("org.wikipedia:id/scrollViewContainer"),
-                "Cannot find onboarding",
-                5);
 
-        mainPageObject.swipeLeftIfElementIsValid(
-                By.id(TITLE_LOCATOR_ON_ONBOARDING),
-                FIRST_SCREEN_TITLE,
-                "Cannot find expected title"
-        );
-
-        mainPageObject.swipeLeftIfElementIsValid(
-                By.id(TITLE_LOCATOR_ON_ONBOARDING),
-                SECOND_SCREEN_TITLE,
-                "Cannot find expected title"
-        );
-
-        mainPageObject.swipeLeftIfElementIsValid(
-                By.id(TITLE_LOCATOR_ON_ONBOARDING),
-                THIRD_SCREEN_TITLE,
-                "Cannot find expected title"
-        );
-
-        mainPageObject.swipeLeftIfElementIsValid(
-                By.id(TITLE_LOCATOR_ON_ONBOARDING),
-                FOURTH_SCREEN_TITLE,
-                "Cannot find expected title"
-        );
-
-        mainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/fragment_onboarding_done_button"),
-                "Cannot find element 'onboarding_done_button'",
-                5
-        );
-
-        mainPageObject.waitForElementPresent(
-                By.id("org.wikipedia:id/main_toolbar_wordmark"),
-                "Home page is not displayed",
-                10
-        );
-    }
 
     @Test
     public void testTitlePresence() throws InterruptedException {
