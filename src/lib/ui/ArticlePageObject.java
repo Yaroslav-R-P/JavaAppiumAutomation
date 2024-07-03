@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class ArticlePageObject extends MainPageObject {
     private static final String
-    TITLE = "//android.widget.TextView[@text='Java (programming language)']",
+    TITLE_TPL = "(//android.widget.TextView[@text='{TITLE_TEXT}'])[1]",
     //TITLE = "(//android.widget.TextView[@class='android.widget.TextView'])[1]",
 
 
@@ -22,10 +22,14 @@ public class ArticlePageObject extends MainPageObject {
         super(driver);
     }
 
-    public WebElement waitForTitleElement() {
-        return this.waitForElementPresent(By.xpath(TITLE), "Cannot find article title on page", 20);
+    private static String getTitleXpathByArticleName(String articleNameWithSubstring) {
+        return TITLE_TPL.replace("{TITLE_TEXT}", articleNameWithSubstring);
     }
 
+    public WebElement waitForTitleElement(String articleWithSubstring) {
+        String titleXpath = getTitleXpathByArticleName(articleWithSubstring);
+        return this.waitForElementPresent(By.xpath(titleXpath), "Cannot find article title on page", 20);
+    }
 
     public String getArticleTitle() {
         WebElement element = waitForElementPresent(By.xpath("//android.widget.TextView[@text=\"Java (programming language)\"]"),"cannot find article title", 20);
@@ -63,5 +67,15 @@ public class ArticlePageObject extends MainPageObject {
 
 
     }
+
+    public void assertTheArticleHasATitle(String articleNameWithSubstring) {
+    String title_xpath = getTitleXpathByArticleName(articleNameWithSubstring);
+        this.waitForElementPresent(By.xpath(title_xpath), "The article has no title");
+    }
+
+
+
+
+
 }
 
