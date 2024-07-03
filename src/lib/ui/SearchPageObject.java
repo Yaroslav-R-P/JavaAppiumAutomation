@@ -1,7 +1,9 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 
 public class SearchPageObject extends MainPageObject {
 
@@ -22,8 +24,9 @@ public class SearchPageObject extends MainPageObject {
         SEARCH_INPUT = "org.wikipedia:id/search_src_text",
         SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
         SEARCH_RESULT_BY_SUBSTRING_TPL = "//android.widget.TextView[@text='{SUBSTRING}']",
-        SEARCH_RESULT_ELEMENT = "android.view.ViewGroup",
-        SEARCH_EMPTY_RESULT = "//android.widget.TextView[@text='No results']";
+        SEARCH_RESULT_ELEMENT = "//androidx.recyclerview.widget.RecyclerView[@resource-id=\"org.wikipedia:id/search_results_list\"]/android.view.ViewGroup",
+        SEARCH_EMPTY_RESULT = "//android.widget.TextView[@text='No results']",
+        SEARCH_EMPTY_PAGE_LOGO = "org.wikipedia:id/search_empty_image";
 
 
     public void initSearchInput() {
@@ -61,11 +64,11 @@ public class SearchPageObject extends MainPageObject {
 
     public int getAmountOfFoundArticles() {
         this.waitForElementPresent(
-                By.className(SEARCH_RESULT_ELEMENT),
+                By.xpath(SEARCH_RESULT_ELEMENT),
                 "Cannot find by the request",
                 20
         );
-        return this.getAmountOfElements(By.className(SEARCH_RESULT_ELEMENT));
+        return this.getAmountOfElements(By.xpath(SEARCH_RESULT_ELEMENT));
     }
 
     public void waitForEmptyResultsLabel() {
@@ -74,6 +77,16 @@ public class SearchPageObject extends MainPageObject {
 
     public void assertThereIsNotResultOfSearch() {
         this.assertElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "Cannot find any results");
+    }
+
+    public void assertSearchReturnedSeveralResults() {
+        int amount_of_results = getAmountOfFoundArticles();
+        Assert.assertTrue("The search returned less than two results", amount_of_results > 1);
+
+    }
+
+    public void assertSearchResultsBlockIsHidden() {
+        this.assertElementPresent(By.id(SEARCH_EMPTY_PAGE_LOGO), "SEARCH_EMPTY_PAGE_LOGO is not found");
     }
 }
 
