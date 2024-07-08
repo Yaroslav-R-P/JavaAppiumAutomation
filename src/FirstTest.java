@@ -16,7 +16,7 @@ public class FirstTest extends CoreTestCase  {
 
     @Test
     public void testPlaceholderTextIsValid() {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         MainPageObject mainPageObject = new MainPageObject(driver);
@@ -31,7 +31,7 @@ public class FirstTest extends CoreTestCase  {
     }
     @Test
     public void testCheckingWordsInSearch() throws InterruptedException {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         MainPageObject mainPageObject = new MainPageObject(driver);

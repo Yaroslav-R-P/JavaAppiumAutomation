@@ -2,7 +2,7 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
-import lib.ui.OnboardingPageObject;
+import lib.ui.WelcomePageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
     //тесты на изменение состояний апки
     @Test
     public void testChangeScreenOrientationOnSearchResults() {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);
@@ -39,7 +39,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
     @Test
     public void testSearchArticleInBackground() {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);

@@ -1,21 +1,16 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.ui.MainPageObject;
-import lib.ui.OnboardingPageObject;
+import lib.ui.WelcomePageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class SearchTests extends CoreTestCase {
     //тесты на проверку работы поиска
     @Test
     public void testSearch() {
 
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);
@@ -27,7 +22,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testCancelSearch() {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);
@@ -40,7 +35,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testAmountOfNotEmptySearch() {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);
@@ -57,7 +52,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testAmountOfEmptySearch() throws InterruptedException {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);
@@ -72,7 +67,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testCancelSearchResult() {
 
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);
