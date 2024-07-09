@@ -2,17 +2,15 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.ui.HomePageObject;
-import lib.ui.MainPageObject;
-import lib.ui.OnboardingPageObject;
+import lib.ui.WelcomePageObject;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 public class OnboardingTests extends CoreTestCase {
 
     //EX5
     @Test
     public void testCheckTheTitlesOfTheOnboarding() {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
 
         onboardingPageObject.checkTitleAndSwipe(1);
         onboardingPageObject.checkTitleAndSwipe(2);
