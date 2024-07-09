@@ -3,13 +3,12 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.*;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 public class MyListTests extends CoreTestCase {
     //тесты списков статей
     @Test
     public void testSaveFirstArticleToMyList() throws InterruptedException {
-        OnboardingPageObject onboardingPageObject = new OnboardingPageObject(driver);
+        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = new SearchPageObject(driver);

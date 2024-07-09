@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MainPageObject {
 
@@ -29,7 +30,7 @@ public class MainPageObject {
         );
     }
 
-    public WebElement waitForElementPresent(By by, String error_message) {
+    public WebElement waitForElementPresentV1(By by, String error_message) {
         return waitForElementPresent(by, error_message, 5);
     }
 
@@ -172,6 +173,20 @@ public class MainPageObject {
         if (sum_of_elements > 0){
             String default_message = "An element '" + by + "' supposed to be not present";
             throw  new AssertionError(default_message +" " + error_message);
+        }
+    }
+
+    private By getLocatorString(String locator_with_type) {
+        String[] exploded_locator = locator_with_type.split(Pattern.quote(":"), 2);
+        String by_type = exploded_locator[0];
+        String locator = exploded_locator[1];
+
+        if(by_type.equals("xpath")) {
+            return By.xpath(locator);
+        } else if (by_type.equals("id")) {
+            return By.id(locator);
+        } else {
+            throw new IllegalArgumentException("Cannot get type of locator. Locator " + locator_with_type);
         }
     }
 }
