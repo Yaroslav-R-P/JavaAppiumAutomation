@@ -22,7 +22,8 @@ public class MainPageObject {
     public MainPageObject(AppiumDriver driver) {
         this.driver = driver;
     }
-    public WebElement waitForElementPresent(By by, String error_message, long timeoutSeconds) {
+    public WebElement waitForElementPresent(String locator, String error_message, long timeoutSeconds) {
+        By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
         wait.withMessage(error_message + "\n");
         return wait.until(
@@ -30,23 +31,24 @@ public class MainPageObject {
         );
     }
 
-    public WebElement waitForElementPresentV1(By by, String error_message) {
-        return waitForElementPresent(by, error_message, 5);
-    }
+//    public WebElement waitForElementPresentV1(By by, String error_message) {
+//        return waitForElementPresent(by, error_message, 5);
+//    }
 
-    public WebElement waitForElementAndClick(By by, String error_message, long timeoutSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, timeoutSeconds);
+    public WebElement waitForElementAndClick(String locator, String error_message, long timeoutSeconds) {
+        WebElement element = waitForElementPresent(locator, error_message, timeoutSeconds);
         element.click();
         return element;
     }
 
-    public WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeoutSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, 5);
+    public WebElement waitForElementAndSendKeys(String locator, String value, String error_message, long timeoutSeconds) {
+        WebElement element = waitForElementPresent(locator, error_message, 5);
         element.sendKeys(value);
         return element;
     }
 
-    public boolean waitForElementNotPresent(By by, String error_message, long timeoutInSeconds) {
+    public boolean waitForElementNotPresent(String locator, String error_message, long timeoutInSeconds) {
+        By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "/n");
         return wait.until(
@@ -54,8 +56,8 @@ public class MainPageObject {
         );
     }
 
-    public WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
+    public WebElement waitForElementAndClear(String locator, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         element.clear();
         return element;
     }
@@ -83,8 +85,8 @@ public class MainPageObject {
         this.driver.perform(Arrays.asList(swipe));
     }
 
-    public void swipeElementToLeft(By by, long duration, String error_message) {
-        WebElement element = waitForElementPresent(by, error_message, 10);
+    public void swipeElementToLeft(String locator, long duration, String error_message) {
+        WebElement element = waitForElementPresent(locator, error_message, 10);
 
         Point location = element.getLocation();
         Dimension size = element.getSize();
@@ -108,11 +110,12 @@ public class MainPageObject {
     }
 
 
-    public void swipeLeftToFindElement(By by, String error_message, int max_swipes) {
+    public void swipeLeftToFindElement(String locator, String error_message, int max_swipes) {
+        By by = this.getLocatorByString(locator);
         int already_swiped = 0;
         while (driver.findElements(by).size() == 0) {
             if (already_swiped > max_swipes) {
-                waitForElementPresent(by, "Cannot find element by swiping left. \n" + error_message, 0);
+                waitForElementPresent(locator, "Cannot find element by swiping left. \n" + error_message, 0);
                 return;
             }
             swipeLeftQuick();
@@ -120,8 +123,8 @@ public class MainPageObject {
         }
     }
 
-    public void swipeLeftIfElementIsValid(By by, String expectedResult, String error_message) {
-        WebElement element = waitForElementPresent(by, "Cannot find expected title", 5);
+    public void swipeLeftIfElementIsValid(String locator, String expectedResult, String error_message) {
+        WebElement element = waitForElementPresent(locator, "Cannot find expected title", 5);
         String actualTitleText = element.getText();
 
         if (expectedResult.equals(actualTitleText)) {
@@ -151,32 +154,35 @@ public class MainPageObject {
         swipeLeft(200);
     }
 
-    public int getAmountOfElements(By by) {
+    public int getAmountOfElements(String locator) {
+        By by = this.getLocatorByString(locator);
         List elements = driver.findElements(by);
         return elements.size();
     }
 
-    public String waitForElementAndGetAttribute(By by, String error_message, long timeOutInSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
+    public String waitForElementAndGetAttribute(String locator, String error_message, long timeOutInSeconds) {
+        WebElement element = waitForElementPresent(locator, error_message, timeOutInSeconds);
         return element.getText();
     }
-    public void assertElementPresent(By by, String error_message) {
-        int sum_of_elements = getAmountOfElements(by);
+    public void assertElementPresent(String locator, String error_message) {
+        By by = this.getLocatorByString(locator);
+        int sum_of_elements = getAmountOfElements(locator);
         if (sum_of_elements == 0) {
             String error = "Expected element :" + by.toString() + " not found. ";
             throw new AssertionError(error +" " + error_message);
         }
     }
 
-    public void assertElementNotPresent(By by, String error_message) {
-        int sum_of_elements = getAmountOfElements(by);
+    public void assertElementNotPresent(String locator, String error_message) {
+        By by = this.getLocatorByString(locator);
+        int sum_of_elements = getAmountOfElements(locator);
         if (sum_of_elements > 0){
             String default_message = "An element '" + by + "' supposed to be not present";
             throw  new AssertionError(default_message +" " + error_message);
         }
     }
 
-    private By getLocatorString(String locator_with_type) {
+    private By getLocatorByString(String locator_with_type) {
         String[] exploded_locator = locator_with_type.split(Pattern.quote(":"), 2);
         String by_type = exploded_locator[0];
         String locator = exploded_locator[1];
