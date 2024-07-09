@@ -15,8 +15,6 @@ public class CoreTestCase extends TestCase {
     protected AppiumDriver driver;
     private static String AppiumURL = "http://127.0.0.1:4723";
 
-
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -24,8 +22,6 @@ public class CoreTestCase extends TestCase {
         driver = new AndroidDriver(new URL(AppiumURL), capabilities);
         this.rotateScreenPortrait();
     }
-
-
 
     @Override
     protected void tearDown() throws Exception {
@@ -45,8 +41,9 @@ public class CoreTestCase extends TestCase {
         driver.runAppInBackground(Duration.ofSeconds(seconds));
     }
 
-    private DesiredCapabilities getCapabilitiesByPlatformEnv() throws Exception {
+    public DesiredCapabilities getCapabilitiesByPlatformEnv() throws Exception {
         String platform = System.getenv("PLATFORM");
+        System.out.println(platform);
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         if (platform.equals(PLATFORM_ANDROID)) {
