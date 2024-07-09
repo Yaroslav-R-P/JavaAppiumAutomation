@@ -6,16 +6,17 @@ import org.openqa.selenium.WebElement;
 
 public class ArticlePageObject extends MainPageObject {
     private static final String
-    TITLE_TPL = "(//android.widget.TextView[@text='{TITLE_TEXT}'])[1]",
+    TITLE_TPL = "xpath:(//android.widget.TextView[@text='{TITLE_TEXT}'])[1]",
     //TITLE = "(//android.widget.TextView[@class='android.widget.TextView'])[1]",
 
 
-    SAVE_BUTTON = "org.wikipedia:id/page_save",
-    OK_BUTTON_IN_THE_SAVE_WINDOW = "android:id/button1",
+    SAVE_BUTTON = "id:org.wikipedia:id/page_save",
+    OK_BUTTON_IN_THE_SAVE_WINDOW = "id:android:id/button1",
 
-    ADD_TO_LIST_BUTTON_IN_SNACKBAR = "org.wikipedia:id/snackbar_action",
-    VIEW_LIST_BUTTON_IN_SNACKBAR = "org.wikipedia:id/snackbar_action",
-    MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input";
+    ADD_TO_LIST_BUTTON_IN_SNACKBAR = "id:org.wikipedia:id/snackbar_action",
+    VIEW_LIST_BUTTON_IN_SNACKBAR = "id:org.wikipedia:id/snackbar_action",
+    MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
+    ANDROID_TITLE_ELEMENT_FOR_TESTS = "xpath://android.widget.TextView[@text=\"Java (programming language)\"]";
 
 
     public ArticlePageObject(AppiumDriver driver) {
@@ -28,39 +29,38 @@ public class ArticlePageObject extends MainPageObject {
 
     public WebElement waitForTitleElement(String articleWithSubstring) {
         String titleXpath = getTitleXpathByArticleName(articleWithSubstring);
-        return this.waitForElementPresent(By.xpath(titleXpath), "Cannot find article title on page", 20);
+        return this.waitForElementPresent(titleXpath, "Cannot find article title on page", 20);
     }
 
     public String getArticleTitle() {
-        WebElement element = waitForElementPresent(By.xpath("//android.widget.TextView[@text=\"Java (programming language)\"]"),"cannot find article title", 20);
+        WebElement element = waitForElementPresent(ANDROID_TITLE_ELEMENT_FOR_TESTS,"cannot find article title", 20);
         return element.getText();
     }
 
     public void addArticleToMyListAndGoToIt(String name_of_folder) {
         this.waitForElementAndClick(
-                By.id(SAVE_BUTTON),
+                SAVE_BUTTON,
                 "Cannot find save page element",
                 5);
 
         this.waitForElementAndClick(
-                By.id(ADD_TO_LIST_BUTTON_IN_SNACKBAR),
+               ADD_TO_LIST_BUTTON_IN_SNACKBAR,
                 "Cannot find 'Add to list' button on snackbar",
                 5);
 
-        this.waitForElementAndSendKeys(
-                By.id(MY_LIST_NAME_INPUT),
+        this.waitForElementAndSendKeys(MY_LIST_NAME_INPUT,
                 name_of_folder,
                 "Cannot put text into articles folder input",
                 10
         );
 
         this.waitForElementAndClick(
-                By.id(OK_BUTTON_IN_THE_SAVE_WINDOW),
+                OK_BUTTON_IN_THE_SAVE_WINDOW,
                 "Cannot find 'Ok' button",
                 5);
 
         this.waitForElementAndClick(
-                By.id(VIEW_LIST_BUTTON_IN_SNACKBAR),
+                VIEW_LIST_BUTTON_IN_SNACKBAR,
                 "Cannot find 'Ok' button on snackbar_action",
                 5);
 
@@ -70,7 +70,7 @@ public class ArticlePageObject extends MainPageObject {
 
     public void assertTheArticleHasATitle(String articleNameWithSubstring) {
     String title_xpath = getTitleXpathByArticleName(articleNameWithSubstring);
-        this.waitForElementPresent(By.xpath(title_xpath), "The article has no title");
+        this.waitForElementPresent(title_xpath, "The article has no title", 10);
     }
 
 

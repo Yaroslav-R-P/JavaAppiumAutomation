@@ -8,9 +8,9 @@ public class HomePageObject extends MainPageObject {
         super(driver);
     }
     private static final String
-            MAIN_TOOLBAR = "org.wikipedia:id/main_toolbar";
+            MAIN_TOOLBAR = "id:org.wikipedia:id/main_toolbar";
 
     public void isMainPageDisplayed() {
-        this.waitForElementPresent(By.id(MAIN_TOOLBAR), "Cannot find MAIN_TOOLBAR, home page is not displayed", 10);
+        this.waitForElementPresent(MAIN_TOOLBAR, "Cannot find MAIN_TOOLBAR, home page is not displayed", 10);
     }
 }
