@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.WelcomePageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class ArticleTests extends CoreTestCase {
@@ -13,7 +14,7 @@ public class ArticleTests extends CoreTestCase {
         WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         String articleWithSubstring = "Java (programming language)";
@@ -32,7 +33,7 @@ public class ArticleTests extends CoreTestCase {
         WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.clickByArticleWithSubstring(articleNameWithSubstring);

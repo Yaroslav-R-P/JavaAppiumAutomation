@@ -3,6 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.WelcomePageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class SearchTests extends CoreTestCase {
@@ -13,7 +14,7 @@ public class SearchTests extends CoreTestCase {
         WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.waitForSearchResult("Object-oriented programming language");
@@ -25,7 +26,7 @@ public class SearchTests extends CoreTestCase {
         WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.waitForCancelButtonToAppear();
@@ -38,7 +39,7 @@ public class SearchTests extends CoreTestCase {
         WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         String search_line = "Linkin Park Diskography";
         searchPageObject.typeSearchLine(search_line);
@@ -55,7 +56,7 @@ public class SearchTests extends CoreTestCase {
         WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         String search_line = "sdfghjhn, v";
         searchPageObject.typeSearchLine(search_line);
@@ -70,7 +71,7 @@ public class SearchTests extends CoreTestCase {
         WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.assertSearchReturnedSeveralResults();

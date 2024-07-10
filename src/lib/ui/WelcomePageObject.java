@@ -20,6 +20,7 @@ public class WelcomePageObject extends MainPageObject {
     STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK = "xpath://XCUIElementTypeStaticText[@name='Learn more about data collected']",
     NEXT_LINK = "xpath://XCUIElementTypeButton[@name='Next']",
     GET_STARTED_LINK = "xpath://XCUIElementTypeButton[@name='Get started']",
+    SKIP = "xpath://XCUIElementTypeButton[@name='Skip']",
     SKIP_BUTTON_ON_ANDROID = "id:org.wikipedia:id/fragment_onboarding_skip_button",
     SCROLL_VIEW_CONTAINER_ANDROID = "id:org.wikipedia:id/scrollViewContainer";
 
@@ -35,6 +36,10 @@ public class WelcomePageObject extends MainPageObject {
                 "Cannot find 'onboarding_skip_button'",
                 5
         );
+    }
+
+    public void clickSkip() {
+        this.waitForElementAndClick(SKIP, "Cannot find skip button", 10);
     }
     public void checkTitleAndSwipe(int screenNumber) {
         this.waitForElementPresent(SCROLL_VIEW_CONTAINER_ANDROID,
