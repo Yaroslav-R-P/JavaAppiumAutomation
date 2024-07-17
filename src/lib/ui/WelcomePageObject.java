@@ -1,6 +1,7 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -41,32 +42,97 @@ public abstract class WelcomePageObject extends MainPageObject {
         this.waitForElementAndClick(SKIP, "Cannot find skip button", 10);
     }
     public void checkTitleAndSwipe(int screenNumber) {
-        this.waitForElementPresent(SCROLL_VIEW_CONTAINER_ANDROID,
-                "Cannot find onboarding",
-                5);
-        WebElement element = waitForElementPresent(TITLE_LOCATOR_ON_ONBOARDING, "Cannot find title", 5);
-        String expectedResult = null;
-        String error = "The screen title is incorrect, swipe is cancelled";
-        if (screenNumber == 1) {
-            expectedResult = FIRST_SCREEN_TITLE;
-        }
-        if (screenNumber == 2) {
-            expectedResult = SECOND_SCREEN_TITLE;
-        }
-        if (screenNumber == 3) {
-            expectedResult = THIRD_SCREEN_TITLE;
-        }
-        if (screenNumber == 4) {
-            expectedResult = FOURTH_SCREEN_TITLE;
+
+        if(Platform.getInstance().isAndroid()){
+            this.waitForElementPresent(SCROLL_VIEW_CONTAINER_ANDROID,
+                    "Cannot find onboarding",
+                    5);
+            WebElement element = waitForElementPresent(TITLE_LOCATOR_ON_ONBOARDING, "Cannot find title", 5);
+            String expectedResult = null;
+            String error = "The screen title is incorrect, swipe is cancelled";
+            if (screenNumber == 1) {
+                expectedResult = FIRST_SCREEN_TITLE;
+            }
+            if (screenNumber == 2) {
+                expectedResult = SECOND_SCREEN_TITLE;
+            }
+            if (screenNumber == 3) {
+                expectedResult = THIRD_SCREEN_TITLE;
+            }
+            if (screenNumber == 4) {
+                expectedResult = FOURTH_SCREEN_TITLE;
+            }
+
+            String actualTitleText = element.getText();
+            if (expectedResult.equals(actualTitleText)) {
+                swipeLeftQuick();
+            } else {
+                throw  new AssertionError(error);
+            }
+        } else {
+            String expectedResult = null;
+            String actual_result = null;
+            String error = "The screen title is incorrect, swipe is cancelled";
+
+            if (screenNumber == 1) {
+                expectedResult = FIRST_SCREEN_TITLE;
+                actual_result = waitForElementAndGetAttribute(STEP_LEARN_MIRE_LINK, "Cannot find title text on first screen", 10);
+            }
+            if (screenNumber == 2) {
+                expectedResult = SECOND_SCREEN_TITLE;
+                actual_result = waitForElementAndGetAttribute(STEP_NEW_WAYS_TO_EXPLORE, "Cannot find title text on second screen", 10);
+                if(expectedResult.equals(actual_result)) {swipeLeft(200);}}
+            if (screenNumber == 3) {
+                expectedResult = THIRD_SCREEN_TITLE;
+                actual_result = waitForElementAndGetAttribute(STEP_ADD_OR_EDIT_PREFERRED_LANGUAGES_LINK, "Cannot find title text on third screen = "+ actual_result, 10);
+                if(expectedResult.equals(actual_result)) {swipeLeft(200);}
+            }
+            if (screenNumber == 4) {
+                expectedResult = FOURTH_SCREEN_TITLE;
+                actual_result = waitForElementAndGetAttribute(STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK, "Cannot find title text on four screen", 10);
+            }
+
+            if (expectedResult.equals(actual_result)) {
+                swipeLeft(200);
+               // swipeLeftQuick();
+            } else {
+                throw  new AssertionError(error);
+            }
         }
 
-        String actualTitleText = element.getText();
-        if (expectedResult.equals(actualTitleText)) {
-            swipeLeftQuick();
-        } else {
-            throw  new AssertionError(error);
-        }
     }
+
+//    public void checkTitleAndSwipe(int screenNumber) {
+//        String expectedResult = null;
+//        String actual_result = null;
+//        String error = "The screen title is incorrect, swipe is cancelled";
+//
+//        if (screenNumber == 1) {
+//            expectedResult = FIRST_SCREEN_TITLE;
+//            actual_result = waitForElementAndGetAttribute(STEP_LEARN_MIRE_LINK, "Cannot find title text on first screen", 10);
+//        }
+//        if (screenNumber == 2) {
+//            expectedResult = SECOND_SCREEN_TITLE;
+//            actual_result = waitForElementAndGetAttribute(STEP_NEW_WAYS_TO_EXPLORE, "Cannot find title text on first screen", 10);
+//        }
+//        if (screenNumber == 3) {
+//            expectedResult = THIRD_SCREEN_TITLE;
+//            actual_result = waitForElementAndGetAttribute(STEP_ADD_OR_EDIT_PREFERRED_LANGUAGES_LINK, "Cannot find title text on first screen", 10);
+//
+//        }
+//        if (screenNumber == 4) {
+//            expectedResult = FOURTH_SCREEN_TITLE;
+//            actual_result = waitForElementAndGetAttribute(STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK, "Cannot find title text on first screen", 10);
+//
+//        }
+//
+//
+//        if (expectedResult.equals(actual_result)) {
+//            swipeLeftQuick();
+//        } else {
+//            throw  new AssertionError(error);
+//        }
+//    }
 
     public void clickGetStarted() {
         this.waitForElementAndClick(ONBOARDONG_DONE_BUTTON,
