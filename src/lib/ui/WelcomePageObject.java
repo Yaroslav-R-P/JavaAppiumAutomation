@@ -99,40 +99,7 @@ public abstract class WelcomePageObject extends MainPageObject {
                 throw  new AssertionError(error);
             }
         }
-
     }
-
-//    public void checkTitleAndSwipe(int screenNumber) {
-//        String expectedResult = null;
-//        String actual_result = null;
-//        String error = "The screen title is incorrect, swipe is cancelled";
-//
-//        if (screenNumber == 1) {
-//            expectedResult = FIRST_SCREEN_TITLE;
-//            actual_result = waitForElementAndGetAttribute(STEP_LEARN_MIRE_LINK, "Cannot find title text on first screen", 10);
-//        }
-//        if (screenNumber == 2) {
-//            expectedResult = SECOND_SCREEN_TITLE;
-//            actual_result = waitForElementAndGetAttribute(STEP_NEW_WAYS_TO_EXPLORE, "Cannot find title text on first screen", 10);
-//        }
-//        if (screenNumber == 3) {
-//            expectedResult = THIRD_SCREEN_TITLE;
-//            actual_result = waitForElementAndGetAttribute(STEP_ADD_OR_EDIT_PREFERRED_LANGUAGES_LINK, "Cannot find title text on first screen", 10);
-//
-//        }
-//        if (screenNumber == 4) {
-//            expectedResult = FOURTH_SCREEN_TITLE;
-//            actual_result = waitForElementAndGetAttribute(STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK, "Cannot find title text on first screen", 10);
-//
-//        }
-//
-//
-//        if (expectedResult.equals(actual_result)) {
-//            swipeLeftQuick();
-//        } else {
-//            throw  new AssertionError(error);
-//        }
-//    }
 
     public void clickGetStarted() {
         this.waitForElementAndClick(ONBOARDONG_DONE_BUTTON,
