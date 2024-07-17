@@ -4,21 +4,24 @@ import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.WelcomePageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.SearchPageObjectFactory;
+import lib.ui.factories.WelcomePageObjectFactory;
 import org.junit.Test;
 
 public class ChangeAppConditionTests extends CoreTestCase {
     //тесты на изменение состояний апки
     @Test
     public void testChangeScreenOrientationOnSearchResults() {
-        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
+        WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.clickByArticleWithSubstring("Java (programming language)");
 
-        ArticlePageObject articlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);;
         String title_before_rotation = articlePageObject.getArticleTitle();
 
         this.rotateScreenLandscape();
@@ -39,10 +42,10 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
     @Test
     public void testSearchArticleInBackground() {
-        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
+        WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
         onboardingPageObject.skipOnboarding();
 
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.waitForSearchResult("Java (programming language)");

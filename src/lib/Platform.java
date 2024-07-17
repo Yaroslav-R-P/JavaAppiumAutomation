@@ -13,6 +13,15 @@ public class Platform {
     private static final String PLATFORM_ANDROID = "android";
     private static final String APPIUM_URL = "http://127.0.0.1:4723";
 
+    private static Platform instance;
+    private Platform() {}
+
+    public static Platform getInstance() {
+        if(instance == null) {
+            instance = new Platform();
+        }
+        return instance;
+    }
     public AppiumDriver getDriver() throws Exception {
         URL URL = new URL(APPIUM_URL);
         if(this.isAndroid()) {
@@ -47,8 +56,8 @@ public class Platform {
     private DesiredCapabilities getIOSDesiredCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
-        capabilities.setCapability("appium:deviceName", "iPhone 14");
-        capabilities.setCapability("appium:platformVersion", "16.0");
+        capabilities.setCapability("appium:deviceName", "iPhone 13");
+        capabilities.setCapability("appium:platformVersion", "15.4");
         capabilities.setCapability("appium:automationName", "XCUITest");
         capabilities.setCapability("appium:app", "/Users/yar/Desktop/JavaAppiumAutomation/JavaAppiumAutomation/apks/viki.app");
         return capabilities;

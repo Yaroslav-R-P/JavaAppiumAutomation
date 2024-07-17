@@ -1,22 +1,21 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import lib.Platform;
 
-public class ArticlePageObject extends MainPageObject {
-    private static final String
-    TITLE_TPL = "xpath:(//android.widget.TextView[@text='{TITLE_TEXT}'])[1]",
-    //TITLE = "(//android.widget.TextView[@class='android.widget.TextView'])[1]",
+abstract public class ArticlePageObject extends MainPageObject {
+    protected static String
+    TITLE_TPL,
+    SAVE_BUTTON,
+    OK_BUTTON_IN_THE_SAVE_WINDOW,
 
-
-    SAVE_BUTTON = "id:org.wikipedia:id/page_save",
-    OK_BUTTON_IN_THE_SAVE_WINDOW = "id:android:id/button1",
-
-    ADD_TO_LIST_BUTTON_IN_SNACKBAR = "id:org.wikipedia:id/snackbar_action",
-    VIEW_LIST_BUTTON_IN_SNACKBAR = "id:org.wikipedia:id/snackbar_action",
-    MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
-    ANDROID_TITLE_ELEMENT_FOR_TESTS = "xpath://android.widget.TextView[@text=\"Java (programming language)\"]";
+    ADD_TO_LIST_BUTTON_IN_SNACKBAR,
+    VIEW_LIST_BUTTON_IN_SNACKBAR,
+    MY_LIST_NAME_INPUT,
+    ANDROID_TITLE_ELEMENT_FOR_TESTS,
+    CLOSE_ARTICLE_BUTTON,
+    GO_HOME_LINK;
 
 
     public ArticlePageObject(AppiumDriver driver) {
@@ -31,10 +30,18 @@ public class ArticlePageObject extends MainPageObject {
         String titleXpath = getTitleXpathByArticleName(articleWithSubstring);
         return this.waitForElementPresent(titleXpath, "Cannot find article title on page", 20);
     }
-
+    /*
+    Ниже пример изменения методов в зависимости от типа платфрмы.По факту, логика на обе платформы у тебя одинакова +-, ты понял, но как пример
+    стоит учитывать. Дальше методы будут переписываться в зависимости от платфрмы
+     */
     public String getArticleTitle() {
         WebElement element = waitForElementPresent(ANDROID_TITLE_ELEMENT_FOR_TESTS,"cannot find article title", 20);
-        return element.getText();
+        if(Platform.getInstance().isAndroid()) {
+            return element.getText();
+        } else {
+            return element.getAttribute("name");
+        }
+
     }
 
     public void addArticleToMyListAndGoToIt(String name_of_folder) {
@@ -63,14 +70,19 @@ public class ArticlePageObject extends MainPageObject {
                 VIEW_LIST_BUTTON_IN_SNACKBAR,
                 "Cannot find 'Ok' button on snackbar_action",
                 5);
-
-
-
     }
 
     public void assertTheArticleHasATitle(String articleNameWithSubstring) {
     String title_xpath = getTitleXpathByArticleName(articleNameWithSubstring);
         this.waitForElementPresent(title_xpath, "The article has no title", 10);
+    }
+
+    public void addArticlesToMySave() {
+    waitForElementAndClick(SAVE_BUTTON,"Cannot find Save button", 5);
+    }
+
+    public void goToTheHomeWikiPage() {
+        waitForElementAndClick(GO_HOME_LINK, "Cannot find link 'go to the home page'", 5);
     }
 
 
