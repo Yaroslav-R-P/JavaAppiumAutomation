@@ -12,7 +12,7 @@ public class OnboardingTests extends CoreTestCase {
 
     //EX5
     @Test
-    public void testCheckTheTitlesOfTheOnboarding() throws InterruptedException {
+    public void testCheckTheTitlesOfTheOnboarding() {
         WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
 
         onboardingPageObject.checkTitleAndSwipe(1);
