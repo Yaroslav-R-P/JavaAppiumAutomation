@@ -4,25 +4,24 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class WelcomePageObject extends MainPageObject {
+public abstract class WelcomePageObject extends MainPageObject {
 
-    private static final String
-    TITLE_LOCATOR_ON_ONBOARDING = "id:org.wikipedia:id/primaryTextView",
-    FIRST_SCREEN_TITLE = "The Free Encyclopedia\n" + "…in over 300 languages",
-    SECOND_SCREEN_TITLE = "New ways to explore",
-    THIRD_SCREEN_TITLE = "Reading lists with sync",
-    FOURTH_SCREEN_TITLE = "Data & Privacy",
-    ONBOARDONG_DONE_BUTTON = "id:org.wikipedia:id/fragment_onboarding_done_button",
+    protected static String
+    TITLE_LOCATOR_ON_ONBOARDING,
+    FIRST_SCREEN_TITLE,
+    SECOND_SCREEN_TITLE,
+    THIRD_SCREEN_TITLE,
+    FOURTH_SCREEN_TITLE,
+    ONBOARDONG_DONE_BUTTON,
 
-    STEP_LEARN_MIRE_LINK = "xpath://XCUIElementTypeStaticText[@name='Learn more about Wikipedia']",
-    STEP_NEW_WAYS_TO_EXPLORE = "id:New ways to explore",
-    STEP_ADD_OR_EDIT_PREFERRED_LANGUAGES_LINK = "xpath://XCUIElementTypeButton[@name='Add or edit preferred languages']",
-    STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK = "xpath://XCUIElementTypeStaticText[@name='Learn more about data collected']",
-    NEXT_LINK = "xpath://XCUIElementTypeButton[@name='Next']",
-    GET_STARTED_LINK = "xpath://XCUIElementTypeButton[@name='Get started']",
-    SKIP = "xpath://XCUIElementTypeButton[@name='Skip']",
-    SKIP_BUTTON_ON_ANDROID = "id:org.wikipedia:id/fragment_onboarding_skip_button",
-    SCROLL_VIEW_CONTAINER_ANDROID = "id:org.wikipedia:id/scrollViewContainer";
+    STEP_LEARN_MIRE_LINK,
+    STEP_NEW_WAYS_TO_EXPLORE,
+    STEP_ADD_OR_EDIT_PREFERRED_LANGUAGES_LINK,
+    STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK,
+    NEXT_LINK,
+    GET_STARTED_LINK,
+    SKIP,
+    SCROLL_VIEW_CONTAINER_ANDROID;
 
 
     public WelcomePageObject(AppiumDriver driver) {
@@ -31,8 +30,8 @@ public class WelcomePageObject extends MainPageObject {
 
 
     public void skipOnboarding() {
-        this.waitForElementPresent(SKIP_BUTTON_ON_ANDROID, "Cannot find skip_button", 10);
-        this.waitForElementAndClick(SKIP_BUTTON_ON_ANDROID,
+        this.waitForElementPresent(SKIP, "Cannot find skip_button", 10);
+        this.waitForElementAndClick(SKIP,
                 "Cannot find 'onboarding_skip_button'",
                 5
         );

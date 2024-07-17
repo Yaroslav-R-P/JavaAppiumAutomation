@@ -3,14 +3,18 @@ package lib.ui;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
-public class MyListsPageObject extends MainPageObject {
+abstract public class MyListsPageObject extends MainPageObject {
     public MyListsPageObject(AppiumDriver driver) {
         super(driver);
     }
 
-    public static final String
-    FOLDER_NAME_TPL = "{FOLDER_NAME}",
-    ARTICLE_BY_TITLE_TPL = "xpath://android.widget.TextView[@text='{TITLE}']";
+    protected static String
+    FOLDER_NAME_TPL,
+    ARTICLE_BY_TITLE_TPL,
+
+    NOT_NOW_LINK,
+    DELETE_ARTICLE,
+    JAVA_ARTICLE_TITLE;
 
 
     // данный метод написан для примера, не используется в новой версии вики
@@ -48,4 +52,19 @@ public class MyListsPageObject extends MainPageObject {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementNotPresent(article_xpath, "Saved article title still present with title" + article_title, 15);
     }
+
+    public void closeSynchronizationWindow() {
+        waitForElementAndClick(NOT_NOW_LINK, "Cannot find close button on synchronization window", 10);
+    }
+
+    public void swipeAndTapDeleteArticle() {
+        this.swipeElementToLeft(
+                JAVA_ARTICLE_TITLE,
+                600,
+                "Cannot to swipe"
+        );
+        this.waitForElementAndClick(DELETE_ARTICLE, "Cannot find Delete button", 10);
+    }
+
+
 }

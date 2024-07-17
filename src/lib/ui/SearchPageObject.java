@@ -28,7 +28,6 @@ public abstract class SearchPageObject extends MainPageObject {
         SEARCH_EMPTY_RESULT,
         SEARCH_EMPTY_PAGE_LOGO;
 
-
     public void initSearchInput() {
         this.waitForElementPresent(SEARCH_INIT_ELEMENT, "Cannot find search input before clicking", 5);
         this.waitForElementAndClick(SEARCH_INIT_ELEMENT, "Cannot find and click search init element", 5);

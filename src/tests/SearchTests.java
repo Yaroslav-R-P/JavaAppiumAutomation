@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.ui.WelcomePageObject;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
+import lib.ui.factories.WelcomePageObjectFactory;
 import org.junit.Test;
 
 public class SearchTests extends CoreTestCase {
@@ -11,7 +12,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearch() {
 
-        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
+        WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
@@ -23,7 +24,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testCancelSearch() {
-        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
+        WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
@@ -36,7 +37,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testAmountOfNotEmptySearch() {
-        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
+        WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
@@ -52,8 +53,8 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
-    public void testAmountOfEmptySearch() throws InterruptedException {
-        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
+    public void testAmountOfEmptySearch() {
+        WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
@@ -68,7 +69,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testCancelSearchResult() {
 
-        WelcomePageObject onboardingPageObject = new WelcomePageObject(driver);
+        WelcomePageObject onboardingPageObject = WelcomePageObjectFactory.get(driver);
         onboardingPageObject.skipOnboarding();
 
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);

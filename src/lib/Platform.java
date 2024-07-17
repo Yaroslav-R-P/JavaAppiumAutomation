@@ -56,8 +56,8 @@ public class Platform {
     private DesiredCapabilities getIOSDesiredCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
-        capabilities.setCapability("appium:deviceName", "iPhone 14");
-        capabilities.setCapability("appium:platformVersion", "16.0");
+        capabilities.setCapability("appium:deviceName", "iPhone 13");
+        capabilities.setCapability("appium:platformVersion", "15.4");
         capabilities.setCapability("appium:automationName", "XCUITest");
         capabilities.setCapability("appium:app", "/Users/yar/Desktop/JavaAppiumAutomation/JavaAppiumAutomation/apks/viki.app");
         return capabilities;
