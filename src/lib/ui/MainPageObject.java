@@ -108,7 +108,43 @@ public class MainPageObject {
                 Duration.ofMillis(duration)
         );
     }
+    //метод swipeUpTitleElementAppear приведен для примера, не используется в текущем проекте
+    public void swipeUpTitleElementAppear(String locator, String error_message, int max_swipes) {
+        By by = this.getLocatorByString(locator);
+        int already_swiped = 0;
+        while(!this.isElementLocatedOnTheScreen(locator)) // то есть пока у нас элемент не находится на экране
+            if(already_swiped > max_swipes) {
+                Assert.assertTrue(error_message,this.isElementLocatedOnTheScreen(locator));
+            }
+        //<Метод swipeUPQuick>
+        already_swiped++;
 
+
+
+        while (driver.findElements(by).size() == 0) {
+            if (already_swiped > max_swipes) {
+                waitForElementPresent(locator, "Cannot find element by swiping left. \n" + error_message, 0);
+                return;
+            }
+            swipeLeftQuick();
+            already_swiped++;
+        }
+    }
+    public boolean isElementLocatedOnTheScreen(String locator) {
+        int element_location_by_y = this.waitForElementPresent(locator,
+                "Cannot find element by locator" + locator,
+                5).getLocation().getY();
+        /*
+        Код выше - таким образом мы находим элемент и получаем его расположение по оси Y (по вертикали)
+         */
+        int screen_size_by_y = driver.manage().window().getSize().getHeight(); // получаем высоту всего экрана
+        return element_location_by_y < screen_size_by_y;
+        /*
+        Таким образом, пока element_location_by_y будет больше, чем размер экрана по высоте, мы будем возвращать false,
+        Но, как только мы доскроллим до element_location_by_y вернётся true и мы будем знать, что элемент находится и
+        отображается на экране.
+         */
+    }
 
     public void swipeLeftToFindElement(String locator, String error_message, int max_swipes) {
         By by = this.getLocatorByString(locator);

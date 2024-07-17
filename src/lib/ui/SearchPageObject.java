@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 
-public class SearchPageObject extends MainPageObject {
+public abstract class SearchPageObject extends MainPageObject {
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -19,15 +19,14 @@ public class SearchPageObject extends MainPageObject {
     /* TEMPLATES METHODS */
 
 
-    private static final String
-        SEARCH_INIT_ELEMENT = "xpath://*[contains(@text,'Search Wikipedia')]",
-        SEARCH_INPUT = "id:org.wikipedia:id/search_src_text",
-        SEARCH_CANCEL_BUTTON = "id:org.wikipedia:id/search_close_btn",
-        SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://android.widget.TextView[@text='{SUBSTRING}']",
-        SEARCH_RESULT_ELEMENT = "xpath://androidx.recyclerview.widget.RecyclerView[@resource-id=\"org.wikipedia:id/search_results_list\"]/android.view.ViewGroup",
-        SEARCH_EMPTY_RESULT = "xpath://android.widget.TextView[@text='No results']",
-        SEARCH_EMPTY_PAGE_LOGO = "id:org.wikipedia:id/search_empty_image";
-
+     protected static String
+        SEARCH_INIT_ELEMENT,
+        SEARCH_INPUT,
+        SEARCH_CANCEL_BUTTON,
+        SEARCH_RESULT_BY_SUBSTRING_TPL,
+        SEARCH_RESULT_ELEMENT,
+        SEARCH_EMPTY_RESULT,
+        SEARCH_EMPTY_PAGE_LOGO;
 
     public void initSearchInput() {
         this.waitForElementPresent(SEARCH_INIT_ELEMENT, "Cannot find search input before clicking", 5);
